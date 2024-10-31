@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="./sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="TQA.MANAGE_BAYS_QUEUES_SRV" xml:lang="pt" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="BaysState" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Ilha"/>
+                </Key>
+                <Property Name="Ilha" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Loading Bay" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Braco" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Braço" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="16" sap:unicode="false" sap:label="Commercial Prod. Cod" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EstadoIlha" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Loading Bay Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Notacarga" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Nota Carga" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Matricula" Type="Edm.String" Nullable="false" MaxLength="16" sap:unicode="false" sap:label="Plate" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EstadoCarga" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Shipment Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Maktx" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Denominação" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="TanksManage" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Ilha"/>
+                </Key>
+                <Property Name="Ilha" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Loading Bay" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Braco" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Braço" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Centro" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Tank" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Depósito" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Tank Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Ddtext" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Descrição breve" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TankDesc" Type="Edm.String" Nullable="false" MaxLength="16" sap:unicode="false" sap:label="Descrição" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="BaysQueue" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="NrOrdemCliente"/>
+                </Key>
+                <Property Name="IlhaDeCarga" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Loading Bay" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PosicaoDestino" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Queue Place" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PosicaoFila" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Queue Place" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Notacarga" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Nota Carga" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Matricula" Type="Edm.String" Nullable="false" MaxLength="16" sap:unicode="false" sap:label="Plate" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NrOrdemCliente" Type="Edm.String" Nullable="false" MaxLength="9" sap:unicode="false" sap:label="Customer Order" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Transportador" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PN" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Tknum" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="RNM Shipment No" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="xTQAxQUEUE_DDType" sap:label="Data Definition for Ilha Queue" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ilha_de_carga"/>
+                </Key>
+                <Property Name="ilha_de_carga" Type="Edm.String" Nullable="false" MaxLength="3" sap:display-format="UpperCase" sap:label="Loading Bay"/>
+                <Property Name="posicao_fila" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Queue Place"/>
+                <Property Name="notacarga" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Nota Carga" sap:quickinfo="Data Element for TQA Nota Carga"/>
+                <Property Name="nr_ordem_cliente" Type="Edm.String" MaxLength="9" sap:display-format="UpperCase" sap:label="Customer Order"/>
+                <Property Name="dataprevistacarregamento" Type="Edm.DateTimeOffset" Precision="0" sap:label="Planned Load Date"/>
+                <Property Name="regime_alfandegario" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Customs Procedure"/>
+                <Property Name="isencao_isp" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="ISP Exemption"/>
+                <Property Name="nacionalidade_motorista" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Driver Nationality"/>
+                <Property Name="carta_conducao" Type="Edm.String" MaxLength="16" sap:display-format="UpperCase" sap:label="Driver Driving Lic." sap:quickinfo="Driver Driving License"/>
+                <Property Name="tknum" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="RNM Shipment No"/>
+                <Property Name="dataentrada" Type="Edm.DateTimeOffset" Precision="0" sap:label="Entry Date"/>
+                <Property Name="motorista" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Parceiro de negócios" sap:quickinfo="Nº parceiro de negócios"/>
+            </EntityType>
+            <EntityType Name="xTQAxTANKS_VHType" sap:label="Value Help for Tanks" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="tank"/>
+                </Key>
+                <Property Name="tank" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Depósito"/>
+                <Property Name="lgobe" Type="Edm.String" MaxLength="16" sap:label="Descrição Depósito" sap:quickinfo="Descrição do depósito"/>
+                <Property Name="material" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Nº do material"/>
+                <Property Name="desc_material" Type="Edm.String" MaxLength="16" sap:label="Descrição Material" sap:quickinfo="Descrição do depósito"/>
+                <Property Name="status" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Tank Status"/>
+                <Property Name="status_desc" Type="Edm.String" MaxLength="60" sap:label="Estado do Depósito" sap:quickinfo="Texto breve para valores fixos"/>
+            </EntityType>
+            <EntityContainer Name="TQA_MANAGE_BAYS_QUEUES_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="BayState" EntityType="TQA.MANAGE_BAYS_QUEUES_SRV.BaysState" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="TankManage" EntityType="TQA.MANAGE_BAYS_QUEUES_SRV.TanksManage" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="BayQueue" EntityType="TQA.MANAGE_BAYS_QUEUES_SRV.BaysQueue" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="xTQAxQUEUE_DD" EntityType="TQA.MANAGE_BAYS_QUEUES_SRV.xTQAxQUEUE_DDType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="xTQAxTANKS_VH" EntityType="TQA.MANAGE_BAYS_QUEUES_SRV.xTQAxTANKS_VHType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <Annotations Target="TQA.MANAGE_BAYS_QUEUES_SRV.TQA_MANAGE_BAYS_QUEUES_SRV_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+            </Annotations>
+            <atom:link rel="self" href="http://erpdd2.rnm.local:50000/sap/opu/odata/tqa/MANAGE_BAYS_QUEUES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://erpdd2.rnm.local:50000/sap/opu/odata/tqa/MANAGE_BAYS_QUEUES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

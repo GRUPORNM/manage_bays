@@ -1,0 +1,124 @@
+<mvc:View controllerName="managebays.controller.ShipDetail"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:ux="sap.uxap"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:uxap="sap.uxap"
+    xmlns:commons="sap.suite.ui.commons">
+    <Page floatingFooter="true" title="{nr_ordem_cliente}" showNavButton="false" navButtonPress="onNavBackDetail">
+        <content>
+            <uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
+                <uxap:headerContent>
+                    <commons:ProcessFlow id="processflow" foldedCorners="false" wheelZoomable="false" class="PFLayoutSpec" nodes="{Trace>/nodes}" nodePress="onNodePress">
+                        <commons:nodes>
+                            <commons:ProcessFlowNode laneId="{Trace>lane}" nodeId="{Trace>id}" title="{Trace>title}" children="{Trace>children}" state="{Trace>state}" stateText="{Trace>stateText}" texts="{Trace>texts}" highlighted="{Trace>highlighted}" focused="{Trace>focused}" titleAbbreviation="{Trace>titleAbbreviation}" />
+                        </commons:nodes>
+                        <commons:lanes>
+                            <commons:ProcessFlowLaneHeader laneId="1" iconSrc="sap-icon://numbered-text" text="{i18n>loadOrder}" position="0" />
+                            <commons:ProcessFlowLaneHeader laneId="2" iconSrc="sap-icon://kpi-managing-my-area" text="{i18n>checkIn}" position="1" />
+                            <commons:ProcessFlowLaneHeader laneId="3" iconSrc="sap-icon://pending" text="{i18n>queue}" position="2" />
+                            <commons:ProcessFlowLaneHeader laneId="4" iconSrc="sap-icon://my-view" text="{i18n>call}" position="3" />
+                            <commons:ProcessFlowLaneHeader laneId="5" iconSrc="sap-icon://shipping-status" text="{i18n>queue}" position="4" />
+                            <commons:ProcessFlowLaneHeader laneId="6" iconSrc="sap-icon://lateness" text="{i18n>island}" position="5" />
+                            <commons:ProcessFlowLaneHeader laneId="7" iconSrc="sap-icon://shipping-status" text="{i18n>loading}" position="6" />
+                            <commons:ProcessFlowLaneHeader laneId="8" iconSrc="sap-icon://indent" text="{i18n>exitBay}" position="7" />
+                            <commons:ProcessFlowLaneHeader laneId="9" iconSrc="sap-icon://kpi-managing-my-area" text="{i18n>checkOut}" position="8" />
+                            <commons:ProcessFlowLaneHeader laneId="10" iconSrc="sap-icon://shipping-status" text="{i18n>exitedTerminal}" position="9" />
+                        </commons:lanes>
+                    </commons:ProcessFlow>
+                </uxap:headerContent>
+
+                <uxap:sections>
+                    <uxap:ObjectPageSection titleUppercase="false" title="{i18n>loads}">
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection titleUppercase="false">
+                                <Table id="ShipsLoads" width="100%" class="sapFDynamicPageAlignContent" items="{to_ShipsLoads}" mode="Navigation">
+                                    <headerToolbar>
+                                        <OverflowToolbar>
+                                            <content>
+                                                <ToolbarSpacer />
+                                                <Button text="{i18n>fillingReport}" icon="sap-icon://pdf-attachment" iconDensityAware="false" iconInset="false" press="handleFillingAttachPress" type="Active"/>
+                                            </content>
+                                        </OverflowToolbar>
+                                    </headerToolbar>
+                                    <columns>
+                                        <Column width="12em">
+                                            <Text text="{i18n>compartment}" />
+                                        </Column>
+                                    </columns>
+                                    <columns>
+                                        <Column width="12em">
+                                            <Text text="{i18n>productDescription}" />
+                                        </Column>
+                                    </columns>
+                                    <columns>
+                                        <Column width="12em">
+                                            <Text text="{i18n>guide}" />
+                                        </Column>
+                                    </columns>
+                                    <columns>
+                                        <Column width="12em">
+                                            <Text text="{i18n>expectedQuantity}" />
+                                        </Column>
+                                    </columns>
+                                    <columns>
+                                        <Column width="12em">
+                                            <Text text="{i18n>confirmedQuantity}" />
+                                        </Column>
+                                    </columns>
+                                    <columns>
+                                        <Column width="12em">
+                                            <Text text="{i18n>loadingIsland}" />
+                                        </Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem id="loadItem" vAlign="Middle" press="handleAttachmentPress">
+                                            <cells>
+                                                <ObjectIdentifier text="{path : 'codcompartimento', formatter: '.formatter.removeZerosCompartment'}" />
+                                                <ObjectIdentifier text="{maktx}" />
+                                                <ObjectIdentifier text="{vbeln}" />
+                                                <ObjectIdentifier text="{quantprodcomercial}"/>
+                                                <ObjectIdentifier text="{quantconfirmada}"/>
+                                                <ObjectIdentifier text="{path : 'estado_carregado', formatter: '.formatter.formatBay'}" />
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+
+                    <uxap:ObjectPageSection id="modificationsSection" titleUppercase="false" title="{i18n>modifications}">
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection titleUppercase="false">
+                                <Table id="modificationsTable" items="{TerminalData>/modifications}" width="40%">
+                                    <columns>
+                                        <Column>
+                                            <Text text="{i18n>action}" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="{i18n>madeby}" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="{i18n>timestamp}" />
+                                        </Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem>
+                                            <cells>
+                                                <Text text="{path: 'TerminalData>Action', formatter: '.formatter.formatAction'}" />
+                                                <Text text="{TerminalData>User}" />
+                                                <Text text="{TerminalData>Timestamp}" />
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+                </uxap:sections>
+            </uxap:ObjectPageLayout>
+        </content>
+    </Page>
+</mvc:View>

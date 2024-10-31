@@ -1,0 +1,440 @@
+<mvc:View controllerName="managebays.controller.Main"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt" height="100%"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:f="sap.f"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:table="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    xmlns:dnd="sap.ui.core.dnd"
+    xmlns:dnd-grid="sap.f.dnd"
+    xmlns:uxap="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns:filterbar="sap.ui.comp.filterbar"
+    xmlns:microchart="sap.suite.ui.microchart">
+    <tnt:ToolPage id="toolPage" sideExpanded="false">
+        <tnt:sideContent>
+            <tnt:SideNavigation id="sideNavigation" expanded="true" itemSelect=".onItemSelect">
+                <tnt:NavigationList>
+                    <tnt:NavigationListItem text="{i18n>tankExpedition}" key="2" icon="sap-icon://sap-box"/>
+                    <tnt:NavigationListItem text="{i18n>baysManagement}" key="1" icon="sap-icon://shipping-status"/>
+                    <tnt:NavigationListItem text="{i18n>baysOverview}" key="3" icon="sap-icon://repost"/>
+                    <tnt:NavigationListItem text="{i18n>loadsOverview}" key="4" icon="sap-icon://building"/>
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+
+        <tnt:mainContents>
+            <NavContainer id="pageContainer" initialPage="page2">
+                <pages>
+                    <ScrollContainer id="2" horizontal="false" vertical="true" height="100%" class="sapUiContentPadding">
+                        <uxap:ObjectPageLayout id="ObjectPageLayout" enableLazyLoading="true" beforeNavigate="onBeforeNavigate" useIconTabBar="true" showTitleInHeaderContent="true" upperCaseAnchorBar="false" sectionChange="onSectionChange">
+                            <uxap:headerTitle>
+                                <uxap:ObjectPageDynamicHeaderTitle>
+                                    <uxap:expandedHeading>
+                                        <Title text="{LoadsMade>/oData/UsrName}" wrapping="true"/>
+                                    </uxap:expandedHeading>
+
+                                    <uxap:snappedHeading>
+                                        <FlexBox fitContainer="true" alignItems="Center">
+                                            <Avatar src="" class="sapUiTinyMarginEnd"/>
+                                            <Title text="{LoadsMade>/oData/UsrName}" wrapping="true" />
+                                        </FlexBox>
+                                    </uxap:snappedHeading>
+
+                                    <uxap:expandedContent>
+                                        <Text text="{LoadsMade>/oData/RoleName}"/>
+                                    </uxap:expandedContent>
+
+                                    <uxap:snappedContent>
+                                        <Text text="{LoadsMade>/oData/RoleName}"/>
+                                    </uxap:snappedContent>
+
+                                    <uxap:snappedTitleOnMobile>
+                                        <Title text="{LoadsMade>/oData/RoleName}"/>
+                                    </uxap:snappedTitleOnMobile>
+
+                                    <uxap:actions>
+                                        <OverflowToolbarButton icon="sap-icon://action" type="Transparent" text="Share" tooltip="action"/>
+                                    </uxap:actions>
+                                </uxap:ObjectPageDynamicHeaderTitle>
+                            </uxap:headerTitle>
+
+                            <uxap:headerContent>
+                                <FlexBox wrap="Wrap" fitContainer="true" justifyContent="SpaceBetween" alignItems="Start" class="lessHeight">
+                                    <FlexBox wrap="Wrap" alignItems="Start">
+                                        <Avatar class="sapUiSmallMarginEnd" src="" displaySize="L" />
+
+                                        <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                                            <Title text="{i18n>user}" class="sapUiTinyMarginBottom" />
+                                            <Label text="{i18n>contact}"/>
+                                            <Link text="{LoadsMade>/oData/Contact}"/>
+                                            <Label text="{i18n>email}"/>
+                                            <Link text="{LoadsMade>/oData/Email}"/>
+                                        </layout:VerticalLayout>
+
+                                        <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                                            <!-- <Label text="Hello! I am Denise and I use UxAP"/>
+                                            <VBox>
+                                                <Label text="Achieved goals"/>
+                                                <ProgressIndicator percentValue="30" displayValue="30%"/>
+                                            </VBox> -->
+
+                                            <Title text="{i18n>receipts}" class="sapUiTinyMarginBottom" />
+                                            <HBox class="sapUiTinyMarginBottom">
+                                                <Label text="{i18n>ship}:"/>
+                                                <Text text="{LoadsMade>/oData/NReceptionNo}"/>
+                                            </HBox>
+
+                                            <HBox class="sapUiTinyMarginBottom">
+                                                <Label text="{i18n>truck}:"/>
+                                                <Text text="{LoadsMade>/oData/CReceptionNo}"/>
+                                            </HBox>
+                                        </layout:VerticalLayout>
+                                        <!-- 
+                                        <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                                            <Label text="San Jose, USA"/>
+                                        </layout:VerticalLayout> -->
+                                    </FlexBox>
+
+                                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                                        <Title text="{i18n>expeditions}" class="sapUiTinyMarginBottom" />
+                                        <FlexBox width="20rem" height="10rem" alignItems="Start" justifyContent="SpaceBetween">
+                                            <items>
+                                                <microchart:InteractiveDonutChart selectionChanged="onSelectionChanged">
+                                                    <microchart:segments>
+                                                        <microchart:InteractiveDonutChartSegment label="{i18n>expeditionsDone}" value="{path: 'LoadsMade>/oData/DoneLoadsNo', formatter: '.formatter.toFloat'}" />
+                                                        <microchart:InteractiveDonutChartSegment label="{i18n>expeditionsInProgress}" value="{path: 'LoadsMade>/oData/NdoneLoadsNo', formatter: '.formatter.toFloat'}"/>
+                                                        <microchart:InteractiveDonutChartSegment label="{i18n>expeditionsToDo}" value="{path: 'LoadsMade>/oData/CarriedLoadsNo', formatter: '.formatter.toFloat'}"/>
+                                                    </microchart:segments>
+                                                </microchart:InteractiveDonutChart>
+                                            </items>
+                                        </FlexBox>
+                                    </layout:VerticalLayout>
+                                </FlexBox>
+                            </uxap:headerContent>
+
+                            <uxap:sections>
+                                <uxap:ObjectPageSection titleUppercase="false" title="{i18n>expeditionsToDo}">
+                                    <uxap:subSections>
+                                        <uxap:ObjectPageSubSection titleUppercase="false">
+                                            <uxap:blocks>
+                                                <Table id="outLoadsTable" inset="false" items="{/xTQAxMADED_LOADS_DD}" mode="Navigation">
+                                                    <headerToolbar>
+                                                        <OverflowToolbar>
+                                                            <content>
+                                                                <Title text="{i18n>expeditionsToDo}" level="H2"/>
+                                                                <ToolbarSpacer />
+                                                                <DatePicker id="outDatePicker" placeholder="{i18n>plannedLoadDate}" afterValueHelpClose="onFilterShipmentsData('outDatePicker','outLoadsTable')"/>
+                                                            </content>
+                                                        </OverflowToolbar>
+                                                    </headerToolbar>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>orderCustomer}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>carrier}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>plannedLoadDate}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>status}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <items>
+                                                        <ColumnListItem vAlign="Middle" type="Active" press="onShipmentSelect">
+                                                            <cells>
+                                                                <Text text="{nrordemcliente}"/>
+                                                                <Text text="{transportador}"/>
+                                                                <Text text="{path : 'dataprevistacarregamento', formatter: '.formatter.dateFormat'}"/>
+                                                                <ObjectStatus text="{estado_desc}" state="{path : 'estado', formatter: '.formatter.stateFormatter'}" />
+                                                            </cells>
+                                                        </ColumnListItem>
+                                                    </items>
+                                                </Table>
+                                            </uxap:blocks>
+                                        </uxap:ObjectPageSubSection>
+                                    </uxap:subSections>
+                                </uxap:ObjectPageSection>
+
+                                <uxap:ObjectPageSection titleUppercase="false" title="{i18n>expeditionsDone}">
+                                    <uxap:subSections>
+                                        <uxap:ObjectPageSubSection titleUppercase="false">
+                                            <uxap:blocks>
+                                                <Table id="madeTable" inset="false" items="{/xTQAxMADED_LOADS_DD}" mode="Navigation">
+                                                    <headerToolbar>
+                                                        <OverflowToolbar>
+                                                            <content>
+                                                                <Title text="{i18n>expeditionsDone}" level="H2"/>
+                                                                <ToolbarSpacer />
+                                                                <DatePicker id="madeDatePicker" placeholder="{i18n>plannedLoadDate}" afterValueHelpClose="onFilterShipmentsData('madeDatePicker','madeTable')"/>
+                                                            </content>
+                                                        </OverflowToolbar>
+                                                    </headerToolbar>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>orderCustomer}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>carrier}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>startLoadDate}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>endLoadDate}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>plate}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>driver}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>sealing}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <columns>
+                                                        <Column width="12em">
+                                                            <Text text="{i18n>status}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <items>
+                                                        <ColumnListItem vAlign="Middle" type="Active" press="onShipmentSelect">
+                                                            <cells>
+                                                                <Text text="{nrordemcliente}"/>
+                                                                <Text text="{transportador}"/>
+                                                                <Text text="{path : 'datainiciocarregamento', formatter: '.formatter.dateFormat'}"/>
+                                                                <Text text="{path : 'datafimcarregamento', formatter: '.formatter.dateFormat'}"/>
+                                                                <Text text="{matricula}"/>
+                                                                <Text text="{motorista}"/>
+                                                                <Text text="{selagem}"/>
+                                                                <ObjectStatus text="{estado_desc}" state="{path : 'estado', formatter: '.formatter.stateFormatter'}" />
+                                                            </cells>
+                                                        </ColumnListItem>
+                                                    </items>
+                                                </Table>
+                                            </uxap:blocks>
+                                        </uxap:ObjectPageSubSection>
+                                    </uxap:subSections>
+                                </uxap:ObjectPageSection>
+                            </uxap:sections>
+                        </uxap:ObjectPageLayout>
+                    </ScrollContainer>
+
+
+                    <ScrollContainer horizontal="false" vertical="true" height="100%" class="sapUiContentPadding">
+                        <l:VerticalLayout width="100%" height="100%">
+                            <form:SimpleForm id="generalInfoForm" editable="false" layout="ColumnLayout" title="Dados Gerais" columnsM="2" columnsL="3" columnsXL="4" class="sapUiTinyMarginTop">
+                                <form:content>
+                                    <Label text="Nome Ilha"/>
+                                    <Text text="Ilha 1" />
+
+                                    <Label text="Estado Atual"/>
+                                    <Text text="Ativo" />
+                                </form:content>
+                            </form:SimpleForm>
+
+                            <f:GridList id="gridList" headerText="Fila Atual" items="{/items}">
+
+                                <f:dragDropConfig>
+                                    <dnd:DragInfo sourceAggregation="items" />
+                                    <dnd-grid:GridDropInfo targetAggregation="items" dropPosition="Between" dropLayout="Horizontal" drop="onDrop" />
+                                </f:dragDropConfig>
+
+                                <f:customLayout>
+                                    <grid:GridBoxLayout boxMinWidth="15rem" />
+                                </f:customLayout>
+
+                                <f:GridListItem counter="{counter}" highlight="{highlight}" type="{type}" unread="{unread}">
+                                    <VBox height="100%">
+                                        <VBox class="sapUiSmallMargin">
+                                            <HBox justifyContent="SpaceBetween">
+                                                <Title text="Title" wrapping="true" />
+                                                <tnt:InfoLabel text="Posição Fila: 1" colorScheme="6" />
+                                            </HBox>
+                                            <layoutData>
+                                                <FlexItemData growFactor="1" shrinkFactor="0" />
+                                            </layoutData>
+
+                                            <core:Icon src="sap-icon://shipping-status" size="2.265rem" color="Default" class="sapUiTinyMarginBottom"/>
+                                            <Title text="{title}" wrapping="true" />
+                                            <Label text="{subtitle}" wrapping="true" />
+                                        </VBox>
+                                        <OverflowToolbar design="Solid">
+                                            <ToolbarSpacer />
+                                            <Button icon="sap-icon://message-information" type="Transparent" />
+                                        </OverflowToolbar>
+                                    </VBox>
+                                </f:GridListItem>
+                            </f:GridList>
+                        </l:VerticalLayout>
+                    </ScrollContainer>
+
+
+                    <ScrollContainer id="1" horizontal="false" vertical="true" height="100%" class="sapUiContentPadding">
+                        <l:Splitter orientation="Vertical">
+                            <VBox id="ilhaVBox">
+                                <layoutData>
+                                    <l:SplitterLayoutData size="250px"/>
+                                </layoutData>
+
+                            </VBox>
+
+                            <VBox>
+                                <OverflowToolbar>
+                                    <Title text="{i18n>queue}" class="_title"/>
+                                    <ToolbarSpacer/>
+                                    <Button icon="sap-icon://clear-all" press="onClearGridsSelection" />
+                                    <Button text="{i18n>viewCompartments}" type="Emphasized" press="onCheckCompartments" />
+                                    <Button text="{i18n>delete}" type="Emphasized" press="onDeleteFromQueue" />
+                                </OverflowToolbar>
+                                <HBox>
+                                    <Panel id="ilha1" height="100%">
+                                        <layoutData>
+                                            <FlexItemData baseSize="50%" />
+                                        </layoutData>
+
+
+                                    </Panel>
+
+                                    <Panel id="ilha2" height="100%">
+                                        <layoutData>
+                                            <FlexItemData baseSize="50%" />
+                                        </layoutData>
+
+
+                                    </Panel>
+                                </HBox>
+
+                                <HBox>
+                                    <Panel id="ilha3" height="100%">
+                                        <layoutData>
+                                            <FlexItemData baseSize="50%" />
+                                        </layoutData>
+
+
+                                    </Panel>
+
+                                    <Panel id="ilha4" height="100%">
+                                        <layoutData>
+                                            <FlexItemData baseSize="50%" />
+                                        </layoutData>
+
+
+                                    </Panel>
+                                </HBox>
+
+                                <HBox>
+                                    <Panel id="ilha5" height="100%">
+                                        <layoutData>
+                                            <FlexItemData baseSize="50%" />
+                                        </layoutData>
+
+
+                                    </Panel>
+
+                                </HBox>
+                            </VBox>
+                        </l:Splitter>
+                    </ScrollContainer>
+
+
+                    <ScrollContainer id="3" class="sapUiContentPadding" vertical="true" focusable="true">
+                        <!-- <l:Splitter orientation="Vertical"> 
+                            <l:Splitter height="50px">
+                                <VBox alignItems="Center">
+                                    <layoutData>
+                                        <l:SplitterLayoutData size="auto" />
+                                    </layoutData>
+                                    <HBox alignItems="Center">
+                                        <VBox alignItems="Center">
+                                            <Button class="sapUiSmallMarginBottom" type="Emphasized" text="Barreira Fila de Espera" />
+                                        </VBox>
+                                    </HBox>
+                                </VBox>
+
+                                <VBox>
+                                    <VBox alignItems="Center">
+                                        <Button class="sapUiSmallMarginBottom" type="Emphasized" text="Barreira Check Out" />
+                                    </VBox>
+                                </VBox>
+                            </l:Splitter> -->
+
+                        <l:Splitter height="1000px">
+                            <l:layoutData>
+                                <l:SplitterLayoutData size="1000px"/>
+                            </l:layoutData>
+
+                            <VBox>
+                                <OverflowToolbar>
+                                    <Button text="{i18n>zoomOut}" press="onZoom('Out', 'processflow')" />
+                                    <Button text="{i18n>zoomIn}" press="onZoom('In', 'processflow')" />
+                                    <Button icon="sap-icon://refresh" press="onGetTrace" />
+                                    <ToolbarSpacer/>
+                                    <Button text="{i18n>calls}" press="onGetCalls" />
+                                    <Button text="{i18n>add}" type="Reject" press="handleCreateTrace" />
+                                </OverflowToolbar>
+
+                                <commons:ProcessFlow id="processflow" foldedCorners="false" wheelZoomable="false" class="PFLayoutSpec" nodes="{Trace>/nodes}" nodePress="onNodePress">
+                                    <commons:nodes>
+                                        <commons:ProcessFlowNode laneId="{Trace>lane}" nodeId="{Trace>id}" title="{Trace>title}" children="{Trace>children}" state="{Trace>state}" stateText="{Trace>stateText}" texts="{Trace>texts}" highlighted="{Trace>highlighted}" focused="{Trace>focused}" titleAbbreviation="{Trace>titleAbbreviation}" />
+                                    </commons:nodes>
+                                    <commons:lanes>
+                                        <commons:ProcessFlowLaneHeader laneId="1" iconSrc="sap-icon://numbered-text" text="{i18n>loadOrder}" position="0" />
+                                        <commons:ProcessFlowLaneHeader laneId="2" iconSrc="sap-icon://kpi-managing-my-area" text="{i18n>checkIn}" position="1" />
+                                        <commons:ProcessFlowLaneHeader laneId="3" iconSrc="sap-icon://pending" text="{i18n>queue}" position="2" />
+                                        <commons:ProcessFlowLaneHeader laneId="4" iconSrc="sap-icon://my-view" text="{i18n>call}" position="3" />
+                                        <commons:ProcessFlowLaneHeader laneId="5" iconSrc="sap-icon://shipping-status" text="{i18n>queue}" position="4" />
+                                        <commons:ProcessFlowLaneHeader laneId="6" iconSrc="sap-icon://lateness" text="{i18n>island}" position="5" />
+                                        <commons:ProcessFlowLaneHeader laneId="7" iconSrc="sap-icon://shipping-status" text="{i18n>loading}" position="6" />
+                                        <commons:ProcessFlowLaneHeader laneId="8" iconSrc="sap-icon://indent" text="{i18n>exitBay}" position="7" />
+                                        <commons:ProcessFlowLaneHeader laneId="9" iconSrc="sap-icon://kpi-managing-my-area" text="{i18n>checkOut}" position="8" />
+                                        <commons:ProcessFlowLaneHeader laneId="10" iconSrc="sap-icon://shipping-status" text="{i18n>exitedTerminal}" position="9" />
+                                    </commons:lanes>
+                                </commons:ProcessFlow>
+                            </VBox>
+                        </l:Splitter>
+                        <!-- </l:Splitter> -->
+
+                    </ScrollContainer>
+
+
+                    <ScrollContainer id="4" class="sapUiContentPadding" vertical="true" focusable="true">
+                        <VBox id="tankExpedition">
+
+                        </VBox>
+
+                        <VBox id="tankStateVBox">
+
+                        </VBox>
+                    </ScrollContainer>
+
+                </pages>
+            </NavContainer>
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>
