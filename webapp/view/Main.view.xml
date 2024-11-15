@@ -19,10 +19,10 @@
         <tnt:sideContent>
             <tnt:SideNavigation id="sideNavigation" expanded="true" itemSelect=".onItemSelect">
                 <tnt:NavigationList>
-                    <tnt:NavigationListItem text="{i18n>tankExpedition}" key="2" icon="sap-icon://sap-box"/>
+                    <tnt:NavigationListItem text="{i18n>loadsOverview}" key="2" icon="sap-icon://sap-box"/>
                     <tnt:NavigationListItem text="{i18n>baysManagement}" key="1" icon="sap-icon://shipping-status"/>
                     <tnt:NavigationListItem text="{i18n>baysOverview}" key="3" icon="sap-icon://repost"/>
-                    <tnt:NavigationListItem text="{i18n>loadsOverview}" key="4" icon="sap-icon://building"/>
+                    <tnt:NavigationListItem text="{i18n>tankExpedition}" key="4" icon="sap-icon://building"/>
                 </tnt:NavigationList>
             </tnt:SideNavigation>
         </tnt:sideContent>
@@ -424,9 +424,9 @@
 
 
                     <ScrollContainer id="4" class="sapUiContentPadding" vertical="true" focusable="true">
-                        <VBox id="tankExpedition">
+                        <!-- <VBox id="tankExpedition">
 
-                        </VBox>
+                        </VBox> -->
 
                         <VBox id="tankStateVBox">
 

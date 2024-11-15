@@ -61,7 +61,7 @@ sap.ui.define([
             onAfterRendering: function () {
                 sessionStorage.setItem("goToLaunchpad", "X");
                 try {
-                    this.onGetTanks(1);
+                    // this.onGetTanks(1);
                     this.onGetQueue();
                     this.onGetLoads();
                     this.onFilterTable();
@@ -85,7 +85,7 @@ sap.ui.define([
                                     case "1":
                                         this.onGetBays();
                                     case "2":
-                                        this.onGetTanks(1);
+                                        // this.onGetTanks(1);
                                     case "3":
                                         this.onGetTrace();
                                 }
@@ -157,7 +157,7 @@ sap.ui.define([
                 if (oItem.getKey() === "1") {
                     this.onGetBays();
                 } else if (oItem.getKey() === "4") {
-                    this.onGetTanks(1);
+                    // this.onGetTanks(1);
                     this.onBuildGeneralTankStateTable(1);
                 } else if (oItem.getKey() === "3") {
                     this.onGetTrace();
@@ -243,30 +243,30 @@ sap.ui.define([
                 });
             },
 
-            onGetTanks: function (oEditMode) {
-                var oModel = this.getModel(),
-                    that = this;
+            // onGetTanks: function (oEditMode) {
+            //     var oModel = this.getModel(),
+            //         that = this;
 
-                oModel.read("/TankManage", {
-                    success: function (oData) {
-                        that.onBuildGeneralTankTable(oEditMode);
-                        var aTransformedData = that.onTransformTankData(oData.results);
+            //     oModel.read("/TankManage", {
+            //         success: function (oData) {
+            //             that.onBuildGeneralTankTable(oEditMode);
+            //             var aTransformedData = that.onTransformTankData(oData.results);
 
-                        that.onBindTankTable(aTransformedData);
-                    },
-                    error: function (oError) {
-                        var sError = JSON.parse(oError.responseText).error.message.value;
+            //             that.onBindTankTable(aTransformedData);
+            //         },
+            //         error: function (oError) {
+            //             var sError = JSON.parse(oError.responseText).error.message.value;
 
-                        sap.m.MessageBox.alert(sError, {
-                            icon: "ERROR",
-                            onClose: null,
-                            styleClass: '',
-                            initialFocus: null,
-                            textDirection: sap.ui.core.TextDirection.Inherit
-                        });
-                    }
-                });
-            },
+            //             sap.m.MessageBox.alert(sError, {
+            //                 icon: "ERROR",
+            //                 onClose: null,
+            //                 styleClass: '',
+            //                 initialFocus: null,
+            //                 textDirection: sap.ui.core.TextDirection.Inherit
+            //             });
+            //         }
+            //     });
+            // },
 
             onGetTrace: function () {
                 var oModel = this.getModel(),
@@ -614,168 +614,168 @@ sap.ui.define([
             },
 
             //TANQUES EXPEDITION ****************************************
-            onTransformTankData: function (aData) {
-                let oTransformedData = {};
+            // onTransformTankData: function (aData) {
+            //     let oTransformedData = {};
 
-                aData.forEach((oItem) => {
-                    if (!oTransformedData[oItem.Ilha]) {
-                        oTransformedData[oItem.Ilha] = { Ilha: oItem.Ilha };
-                    }
+            //     aData.forEach((oItem) => {
+            //         if (!oTransformedData[oItem.Ilha]) {
+            //             oTransformedData[oItem.Ilha] = { Ilha: oItem.Ilha };
+            //         }
 
-                    oTransformedData[oItem.Ilha][oItem.Braco] = {
-                        Tank: oItem.Tank,
-                        Material: oItem.Material,
-                        Descricao: oItem.TankDesc
-                    };
-                });
+            //         oTransformedData[oItem.Ilha][oItem.Braco] = {
+            //             Tank: oItem.Tank,
+            //             Material: oItem.Material,
+            //             Descricao: oItem.TankDesc
+            //         };
+            //     });
 
-                return Object.values(oTransformedData);
-            },
+            //     return Object.values(oTransformedData);
+            // },
 
-            onBindTankTable: function (aTransformedData) {
-                var oModel = new sap.ui.model.json.JSONModel();
-                oModel.setData({ Tank: aTransformedData });
+            // onBindTankTable: function (aTransformedData) {
+            //     var oModel = new sap.ui.model.json.JSONModel();
+            //     oModel.setData({ Tank: aTransformedData });
 
-                var oTable = sap.ui.getCore().byId("tankTable");
-                oTable.setModel(oModel);
-                oTable.bindRows("/Tank");
-            },
+            //     var oTable = sap.ui.getCore().byId("tankTable");
+            //     oTable.setModel(oModel);
+            //     oTable.bindRows("/Tank");
+            // },
 
-            onBuildGeneralTankTable: function (oEditMode) {
-                var that = this,
-                    oTable = sap.ui.getCore().byId("tankTable");
+            // onBuildGeneralTankTable: function (oEditMode) {
+            //     var that = this,
+            //         oTable = sap.ui.getCore().byId("tankTable");
 
-                if (!oTable) {
-                    oTable = new sap.ui.table.Table("tankTable", {
-                        visibleRowCount: 5,
-                        selectionMode: sap.ui.table.SelectionMode.None,
-                        enableGrouping: true,
-                        ariaLabelledBy: "title"
-                    });
+            //     if (!oTable) {
+            //         oTable = new sap.ui.table.Table("tankTable", {
+            //             visibleRowCount: 5,
+            //             selectionMode: sap.ui.table.SelectionMode.None,
+            //             enableGrouping: true,
+            //             ariaLabelledBy: "title"
+            //         });
 
-                    var oToolbar = new sap.m.OverflowToolbar({
-                        style: sap.m.ToolbarStyle.Clear,
-                        content: [
-                            new sap.m.Title({ text: "{i18n>tankManagement}", class: "_title" }),
-                            new sap.m.ToolbarSpacer(),
-                            new sap.m.Button({
-                                id: "btTankEdit",
-                                text: "Editar",
-                                icon: "sap-icon://edit",
-                                press: [this.onEditPress, this]
-                            })
-                        ]
-                    });
-                    oTable.addExtension(oToolbar);
+            //         var oToolbar = new sap.m.OverflowToolbar({
+            //             style: sap.m.ToolbarStyle.Clear,
+            //             content: [
+            //                 new sap.m.Title({ text: "{i18n>tankManagement}", class: "_title" }),
+            //                 new sap.m.ToolbarSpacer(),
+            //                 new sap.m.Button({
+            //                     id: "btTankEdit",
+            //                     text: "Editar",
+            //                     icon: "sap-icon://edit",
+            //                     press: [this.onEditPress, this]
+            //                 })
+            //             ]
+            //         });
+            //         oTable.addExtension(oToolbar);
 
-                } else {
-                    oTable.removeAllColumns();
-                }
+            //     } else {
+            //         oTable.removeAllColumns();
+            //     }
 
-                var aColumnsInfo = [
-                    { columnName: this.getResourceBundle().getText("island"), path: this.getResourceBundle().getText("bays") + " {Ilha}", sortProperty: "Status", filterProperty: "Status" },
-                    { columnName: this.getResourceBundle().getText("braco1"), path: "1", vhPath: "/xTQAxTANKS_VH" },
-                    { columnName: this.getResourceBundle().getText("braco2"), path: "2", vhPath: "/xTQAxTANKS_VH" },
-                    { columnName: this.getResourceBundle().getText("braco3"), path: "3", vhPath: "/xTQAxTANKS_VH" },
-                    { columnName: this.getResourceBundle().getText("braco4"), path: "4", vhPath: "/xTQAxTANKS_VH" }
-                ];
+            //     var aColumnsInfo = [
+            //         { columnName: this.getResourceBundle().getText("island"), path: this.getResourceBundle().getText("bays") + " {Ilha}", sortProperty: "Status", filterProperty: "Status" },
+            //         { columnName: this.getResourceBundle().getText("braco1"), path: "1", vhPath: "/xTQAxTANKS_VH" },
+            //         { columnName: this.getResourceBundle().getText("braco2"), path: "2", vhPath: "/xTQAxTANKS_VH" },
+            //         { columnName: this.getResourceBundle().getText("braco3"), path: "3", vhPath: "/xTQAxTANKS_VH" },
+            //         { columnName: this.getResourceBundle().getText("braco4"), path: "4", vhPath: "/xTQAxTANKS_VH" }
+            //     ];
 
-                aColumnsInfo.forEach(function (columnInfo, index) {
-                    var oTemplate;
-                    if (oEditMode === 2 && index !== 0) {
-                        oTemplate = new sap.m.Input({
-                            value: {
-                                path: columnInfo.path,
-                                formatter: formatter.emptyTankColumn
-                            },
-                            showSuggestion: true,
-                            showValueHelp: true,
-                            valueHelpRequest: that.onValueHelpRequest.bind(that, "TANKS"),
-                            suggestionItems: {
-                                path: columnInfo.vhPath,
-                                template: new sap.ui.core.Item({
-                                    key: "{" + columnInfo.path + "}",
-                                    text: "{" + columnInfo.path + "}"
-                                })
-                            }
-                        });
-                    } else {
-                        oTemplate = new sap.m.Label({
-                            text: columnInfo.columnName === "Ilha" || columnInfo.columnName === "Bay" || columnInfo.columnName === "Isla" ?
-                                "{i18n>bays} {Ilha}" : {
-                                    path: columnInfo.path,
-                                    formatter: formatter.emptyTankColumn
-                                }
-                        });
-                    }
+            //     aColumnsInfo.forEach(function (columnInfo, index) {
+            //         var oTemplate;
+            //         if (oEditMode === 2 && index !== 0) {
+            //             oTemplate = new sap.m.Input({
+            //                 value: {
+            //                     path: columnInfo.path,
+            //                     formatter: formatter.emptyTankColumn
+            //                 },
+            //                 showSuggestion: true,
+            //                 showValueHelp: true,
+            //                 valueHelpRequest: that.onValueHelpRequest.bind(that, "TANKS"),
+            //                 suggestionItems: {
+            //                     path: columnInfo.vhPath,
+            //                     template: new sap.ui.core.Item({
+            //                         key: "{" + columnInfo.path + "}",
+            //                         text: "{" + columnInfo.path + "}"
+            //                     })
+            //                 }
+            //             });
+            //         } else {
+            //             oTemplate = new sap.m.Label({
+            //                 text: columnInfo.columnName === "Ilha" || columnInfo.columnName === "Bay" || columnInfo.columnName === "Isla" ?
+            //                     "{i18n>bays} {Ilha}" : {
+            //                         path: columnInfo.path,
+            //                         formatter: formatter.emptyTankColumn
+            //                     }
+            //             });
+            //         }
 
-                    var oColumn = new sap.ui.table.Column({
-                        label: new sap.m.Label({ text: columnInfo.columnName }),
-                        template: oTemplate,
-                        sortProperty: columnInfo.sortProperty,
-                        filterProperty: columnInfo.filterProperty
-                    });
-                    oTable.addColumn(oColumn);
-                });
+            //         var oColumn = new sap.ui.table.Column({
+            //             label: new sap.m.Label({ text: columnInfo.columnName }),
+            //             template: oTemplate,
+            //             sortProperty: columnInfo.sortProperty,
+            //             filterProperty: columnInfo.filterProperty
+            //         });
+            //         oTable.addColumn(oColumn);
+            //     });
 
-                var oPanel = this.byId("tankExpedition");
-                if (oPanel && !oPanel.getItems().includes(oTable)) {
-                    oPanel.addItem(oTable);
-                }
-            },
+            //     var oPanel = this.byId("tankExpedition");
+            //     if (oPanel && !oPanel.getItems().includes(oTable)) {
+            //         oPanel.addItem(oTable);
+            //     }
+            // },
 
-            onUpdateTank: function (oIlha, oEntry) {
-                var oModel = this.getModel(),
-                    that = this;
+            // onUpdateTank: function (oIlha, oEntry) {
+            //     var oModel = this.getModel(),
+            //         that = this;
 
-                if (oEntry) {
-                    new sap.m.MessageBox.warning(this.getResourceBundle().getText("onUpdateTank1") + oIlha + this.getResourceBundle().getText("onUpdateTank2") + " " + oEntry.Braco + " " + this.getResourceBundle().getText("onUpdateTank3") + oEntry.Tank + "?", {
-                        title: this.getResourceBundle().getText("tankChange"),
-                        actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
-                        emphasizedAction: sap.m.MessageBox.Action.OK,
-                        onClose: function (oAction) {
-                            if (oAction === sap.m.MessageBox.Action.OK) {
-                                var sPath = "/TankManage('" + oIlha + "')";
+            //     if (oEntry) {
+            //         new sap.m.MessageBox.warning(this.getResourceBundle().getText("onUpdateTank1") + oIlha + this.getResourceBundle().getText("onUpdateTank2") + " " + oEntry.Braco + " " + this.getResourceBundle().getText("onUpdateTank3") + oEntry.Tank + "?", {
+            //             title: this.getResourceBundle().getText("tankChange"),
+            //             actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
+            //             emphasizedAction: sap.m.MessageBox.Action.OK,
+            //             onClose: function (oAction) {
+            //                 if (oAction === sap.m.MessageBox.Action.OK) {
+            //                     var sPath = "/TankManage('" + oIlha + "')";
 
-                                oModel.update(sPath, oEntry, {
-                                    success: function () {
-                                        new sap.m.MessageBox.success(that.getResourceBundle().getText("tankChangeSuccess"), {
-                                            title: that.getResourceBundle().getText("tankChange"),
-                                            actions: [sap.m.MessageBox.Action.OK],
-                                            emphasizedAction: sap.m.MessageBox.Action.OK
-                                        });
+            //                     oModel.update(sPath, oEntry, {
+            //                         success: function () {
+            //                             new sap.m.MessageBox.success(that.getResourceBundle().getText("tankChangeSuccess"), {
+            //                                 title: that.getResourceBundle().getText("tankChange"),
+            //                                 actions: [sap.m.MessageBox.Action.OK],
+            //                                 emphasizedAction: sap.m.MessageBox.Action.OK
+            //                             });
 
-                                        that.onEditPress();
-                                    },
-                                    error: function (oError) {
-                                        var sError = JSON.parse(oError.responseText).error.message.value;
+            //                             that.onEditPress();
+            //                         },
+            //                         error: function (oError) {
+            //                             var sError = JSON.parse(oError.responseText).error.message.value;
 
-                                        sap.m.MessageBox.alert(sError, {
-                                            icon: "ERROR",
-                                            onClose: null,
-                                            styleClass: '',
-                                            initialFocus: null,
-                                            textDirection: sap.ui.core.TextDirection.Inherit
-                                        });
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-            },
+            //                             sap.m.MessageBox.alert(sError, {
+            //                                 icon: "ERROR",
+            //                                 onClose: null,
+            //                                 styleClass: '',
+            //                                 initialFocus: null,
+            //                                 textDirection: sap.ui.core.TextDirection.Inherit
+            //                             });
+            //                         }
+            //                     });
+            //                 }
+            //             }
+            //         });
+            //     }
+            // },
 
-            onEditPress: function () {
-                var oModel = this.getModel("Tank"),
-                    currentEditMode = oModel.getProperty("/editMode"),
-                    oEditMode = currentEditMode === 1 ? 2 : 1;
+            // onEditPress: function () {
+            //     var oModel = this.getModel("Tank"),
+            //         currentEditMode = oModel.getProperty("/editMode"),
+            //         oEditMode = currentEditMode === 1 ? 2 : 1;
 
-                oModel.setProperty("/editMode", oEditMode);
-                this.onGetTanks(oEditMode);
+            //     oModel.setProperty("/editMode", oEditMode);
+            //     this.onGetTanks(oEditMode);
 
-                var sIcon = oEditMode === 1 ? "sap-icon://edit" : "sap-icon://not-editable";
-                sap.ui.getCore().byId("btTankEdit").setIcon(sIcon);
-            },
+            //     var sIcon = oEditMode === 1 ? "sap-icon://edit" : "sap-icon://not-editable";
+            //     sap.ui.getCore().byId("btTankEdit").setIcon(sIcon);
+            // },
 
             // TANQUES STATE ****************************************
             onBuildGeneralTankStateTable: function (oEditMode) {
